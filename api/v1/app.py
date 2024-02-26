@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Createw Flask app; and register the blueprint app_views to Flask instance app."""
+"""
+Createw Flask app; and register the blueprint app_views to Flask instance app.
+"""
 
 import os
 from models import storage
@@ -15,13 +17,17 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def call_close(code):
-    """Removes the current SQLAlchemy Session object after each request."""
+    """
+    Removes the current SQLAlchemy Session object after each request.
+    """
     storage.close()
 
 
 @app.errorhandler(404)
 def error_handler(error):
-    """An error handler function"""
+    """
+    An error handler function
+    """
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
