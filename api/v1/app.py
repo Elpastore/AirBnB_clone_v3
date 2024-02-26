@@ -21,6 +21,7 @@ def call_close(code):
 
 @app.errorhandler(404)
 def error_handler(error):
+    """An error handler function"""
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
