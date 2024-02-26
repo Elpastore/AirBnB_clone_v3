@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Flask configuration file"""
+"""Createw Flask app; and register the blueprint app_views to Flask instance app."""
 
 import os
 from models import storage
@@ -15,7 +15,7 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def call_close(code):
-    """teardown_appcontext"""
+    """Removes the current SQLAlchemy Session object after each request."""
     storage.close()
 
 
