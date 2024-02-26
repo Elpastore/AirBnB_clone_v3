@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""API file"""
+"""Flask configuration file"""
 
 import os
 from models import storage
