@@ -94,7 +94,6 @@ def update_place(place_id):
     else:
         abort(404)
 
-
 @app_views.errorhandler(404)
 def not_found(error):
     '''
