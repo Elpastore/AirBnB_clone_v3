@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-index file 
+index file
 """
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify
