@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-User api
+A script Api for the user
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
