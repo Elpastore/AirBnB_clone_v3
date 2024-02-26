@@ -53,7 +53,6 @@ def create_amenity():
   """
   if not request.get_json():
     abort(400, 'Not a JSON')
-
   data = request.get_json()
   if 'name' not in data:
     abort(400, 'Missing name')
@@ -67,7 +66,7 @@ def update_by_id(amenity_id):
   """
   A function that updates the amenity
   """
-  amenity = storage.get('Amenity', amenity_id)
+  amenity = storage.get(Amenity, amenity_id)
   if amenity:
     data = request.get_json()
     if not data:
