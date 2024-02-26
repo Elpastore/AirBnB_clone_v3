@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from models import storage
 
 
-@app_views.route("/users", methods=['GET'], strict_slashes=False)
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_user():
     """
     return all amenities
@@ -19,7 +19,7 @@ def get_all_user():
     return jsonify(users)
 
 
-@app_views.route("/users/<string:user_id>", methods=['GET'],
+@app_views.route('/users/<string:user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_a_user(user_id):
     """
@@ -31,13 +31,13 @@ def get_a_user(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route("/users/<string:user_id>", methods=['DELETE'],
+@app_views.route('/users/<string:user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
     """
     delete a user given its id
     """
-    user = storage.get("User", user_id)
+    user = storage.get('User', user_id)
     if user is None:
         abort(404)
     user.delete()
@@ -45,7 +45,7 @@ def delete_user(user_id):
     return jsonify({})
 
 
-@app_views.route('/users', methods=["POST"], strict_slashes=False)
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_city():
     """
     add a new user
@@ -61,7 +61,7 @@ def create_city():
     return make_response(jsonify(new_user.to_dict()), 201)
 
 
-@app_views.route("/users/<string:user_id>", methods=['PUT'],
+@app_views.route('/users/<string:user_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_user(user_id):
     """
