@@ -93,3 +93,23 @@ def update_place(place_id):
         return jsonify(place.to_dict()), 200
     else:
         abort(404)
+
+
+@app_views.errorhandler(404)
+def not_found(error):
+    '''
+    Returns 404: Not Found
+    '''
+    # Return a JSON response for 404 error
+    response = {'error': 'Not found'}
+    return jsonify(response), 404
+
+
+@app_views.errorhandler(400)
+def bad_request(error):
+    '''
+    Return Bad Request message for illegal requests to the API
+    '''
+    # Return a JSON response for 400 error
+    response = {'error': 'Bad Request'}
+    return jsonify(response), 400
