@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-A script Api for the user
+Creates a view for Amenity objects - handles all default RESTful API actions
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
