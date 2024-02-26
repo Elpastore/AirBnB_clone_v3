@@ -5,7 +5,8 @@ from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
 
-@app_views.route('/amenities', methods=['GET'],
+
+@app_views.route('/amenities/', methods=['GET'],
                  strict_slashes=False)
 def get_all():
   """
@@ -41,7 +42,8 @@ def delete_by_id(amenity_id):
   storage.save()
   return jsonify({}), 200
 
-@app_views.route('/amenities', methods=['POST'],
+
+@app_views.route('/amenities/', methods=['POST'],
                  strict_slashes=False)
 def create_amenity():
   """
