@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-index file for flask
+Create a route `/status` on the object app_views.
 """
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify
@@ -17,7 +17,7 @@ hbnb_features = {
 }
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=['GET'])
 def status():
     """
     return a JSON status
@@ -25,7 +25,7 @@ def status():
     return jsonify(status='OK')
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=['GET'])
 def stats():
     """
     endpoint that retrieves the number of each objects by type
