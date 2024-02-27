@@ -58,21 +58,29 @@ def create_state():
                  strict_slashes=False)
 def update_state(state_id):
     """A function that updates a state object"""
-    state = storage.get('State', state_id)
+    # Get the State object with the given ID from the storage
+    state = storage.get(State, state_id)
+    if state:
+        if not request.get_json():
+            # Return 400 error if the request data is not in JSON format
+            abort(400, 'Not a JSON')
 
-    if not state:
-        abort(400, 'Not a JSON')
-    if not request.get_json():
-        abort(400, 'Not a Json')
-    data = request.get_json()
+        # Get the JSON data from the request
+        data = request.get_json()
+        ignore_keys = ['id', 'created_at', 'updated_at']
+        # Update the attributes of the State object with the JSON data
+        for key, value in data.items():
+            if key not in ignore_keys:
+                setattr(state, key, value)
 
-    ignored_keys = ['id', 'created_at', 'updated_at']
+        # Save the updated State object to the storage
+        state.save()
+        # Return the updated State object in JSON format with 200 status code
+        return jsonify(state.to_dict()), 200
+    else:
+        # Return 404 error if the State object is not found
+        abort(404)
 
-    for key, value in data.items():
-        if key not in ignored_keys:
-            setattr(state, key, value)
-    state.save()
-    return jsonify(state.to_dict()), 200
 
 @app_views.errorhandler(400)
 def bad_request(error):
