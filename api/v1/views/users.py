@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""
-Creates a view for Amenity objects - handles all default RESTful API actions
+"""Creates a view for Amenity objects - handles all default RESTful API actions
 """
 from flask import abort, jsonify, make_response, request
 from models.user import User
@@ -10,8 +9,7 @@ from models import storage
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_user():
-    """
-    return all amenities
+    """return all amenities
     """
     users = []
     for user in storage.all('User').values():
@@ -22,8 +20,7 @@ def get_all_user():
 @app_views.route('/users/<string:user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_a_user(user_id):
-    """
-    get user with specific id
+    """get user with specific id
     """
     user = storage.get("User", user_id)
     if user is None:
@@ -34,8 +31,7 @@ def get_a_user(user_id):
 @app_views.route('/users/<string:user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
-    """
-    delete a user given its id
+    """delete a user given its id
     """
     user = storage.get('User', user_id)
     if user is None:
@@ -47,8 +43,7 @@ def delete_user(user_id):
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_city():
-    """
-    add a new user
+    """add a new user
     """
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
@@ -64,8 +59,7 @@ def create_city():
 @app_views.route('/users/<string:user_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_user(user_id):
-    """
-    update  an existing user
+    """update  an existing user
     """
     user = storage.get('User', user_id)
     if user is None:
