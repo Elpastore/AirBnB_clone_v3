@@ -12,7 +12,7 @@ def get_all_user():
     """return all amenities
     """
     users = []
-    for user in storage.all('User').values():
+    for user in storage.all(User).values():
         users.append(user.to_dict())
     return jsonify(users)
 
@@ -22,10 +22,11 @@ def get_all_user():
 def get_a_user(user_id):
     """get user with specific id
     """
-    user = storage.get("User", user_id)
-    if user is None:
+    user = storage.get(User, user_id)
+    if user:
+        return jsonify(user.to_dict())
+    else:
         abort(404)
-    return jsonify(user.to_dict())
 
 
 @app_views.route('/users/<string:user_id>', methods=['DELETE'],
@@ -33,12 +34,14 @@ def get_a_user(user_id):
 def delete_user(user_id):
     """delete a user given its id
     """
-    user = storage.get('User', user_id)
-    if user is None:
+    user = storage.get(User, user_id)
+
+    if user:
+        user.delete(user)
+        storage.save()
+        return jsonify({}), 200
+    else:
         abort(404)
-    user.delete()
-    storage.save()
-    return jsonify({})
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
@@ -46,14 +49,15 @@ def create_city():
     """add a new user
     """
     if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+        abort(400, 'Not a JSON')
     if 'email' not in request.get_json():
-        return make_response(jsonify({"error": "Missing email"}), 400)
+        abort(400, 'Missing email')
     if 'password' not in request.get_json():
-        return make_response(jsonify({"error": "Missing password"}), 400)
+        abort(400, 'Missing password')
     new_user = User(**request.get_json())
+
     new_user.save()
-    return make_response(jsonify(new_user.to_dict()), 201)
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route('/users/<string:user_id>', methods=['PUT'],
@@ -61,12 +65,17 @@ def create_city():
 def update_user(user_id):
     """update  an existing user
     """
-    user = storage.get('User', user_id)
-    if user is None:
+    user = storage.get(User, user_id)
+    if user:
+        if not request.get_json():
+            # Return 400 error if the request data is not in JSON format
+            abort(400, 'Not a JSON')
+        ignored = ['id', 'email', 'created_at', 'updated_at']
+
+        for key, value in request.get_json().items():
+            if key not in ignored:
+                setattr(user, key, value)
+        user.save()
+        return jsonify(user.to_dict())
+    else:
         abort(404)
-    ignored = ['id', 'email', 'created_at', 'updated_at']
-    for key, value in request.get_json().items():
-        if key not in ignored:
-            setattr(user, key, value)
-    user.save()
-    return jsonify(user.to_dict())
