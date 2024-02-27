@@ -67,23 +67,23 @@ class FileStorage:
 
     def get(self, cls, id):
         """retrieve one object with specific id"""
-        self.reload()
-        objects = self.all()
-        name = f'{cls.__name__}.{id}'
-        if name in objects.keys():
-            return (objects[name])
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
 
     def count(self, cls=None):
         """count the number of objects in storage"""
-
+        values = classes.values()
         count = 0
         if cls:
-            for value in self.__objects.values():
-                if value.__class__.__name__ == cls.__name__:
-                    count += 1
+            count = len(models.storage.all(cls).values())
         else:
-            for key in self.__objects.values():
-                count += 1
+            for clas in values:
+                count += len(models.storage.all(clas).values())
         return count
 
     def close(self):
