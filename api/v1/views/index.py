@@ -17,15 +17,15 @@ hbnb_features = {
 }
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """
     return a JSON status
     """
-    return jsonify(status='OK')
+    return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """
     endpoint that retrieves the number of each objects by type
