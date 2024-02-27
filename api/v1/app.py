@@ -3,11 +3,14 @@
 Createw Flask app; and register the blueprint app_views to Flask instance app.
 """
 
-import os
-from models import storage
-from api.v1.views import app_views
-from flask import Flask, Blueprint, jsonify, make_response
-from flask_cors import CORS
+try:
+    import os
+    from models import storage
+    from api.v1.views import app_views
+    from flask import Flask, Blueprint, jsonify, make_response
+    from flask_cors import CORS
+except ImportError as e:
+    print(f"Error importing module: {e}")
 
 
 app = Flask(__name__)
