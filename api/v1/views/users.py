@@ -11,7 +11,7 @@ from models import storage
 def get_all_user():
     """return all amenities
     """
-    users = storage.all(User).values()
+    users = storage.all('User').values()
     return jsonify([user.to_dict() for user in users])
 
 
