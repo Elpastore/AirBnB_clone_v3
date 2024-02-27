@@ -7,8 +7,6 @@ Create a new view for User objects - handles all default RESTful API actions
 from flask import abort, jsonify, request
 # Import the User model
 from models.user import User
-from api.v1.views import app_views
-from models import storage
 
 
 # Route for retrieving all User objects
@@ -36,6 +34,7 @@ def get_user(user_id):
     else:
         # Return 404 error if the User object is not found
         abort(404)
+    return jsonify(user.to_dict())
 
 
 # Route for deleting a specific User object by ID
@@ -55,6 +54,9 @@ def delete_user(user_id):
     else:
         # Return 404 error if the User object is not found
         abort(404)
+    user.delete()
+    storage.save()
+    return (jsonify({}))
 
 
 # Route for creating a new User object
