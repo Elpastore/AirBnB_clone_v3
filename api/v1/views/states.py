@@ -31,12 +31,12 @@ def state_by_id(state_id):
                  strict_slashes=False)
 def delete_state(state_id):
     """ A function that delete a state by id"""
-    try:
-        empty_obj = {}
-        storage.delete(storage.get('State', state_id))
+    state = storage.get(State, state_id)
+    if state:
+        storage.delete(state)
         storage.save()
-        return jsonify(empty_obj)
-    except Exception:
+        return jsonify({}), 200
+    else:
         abort(404)
 
 
