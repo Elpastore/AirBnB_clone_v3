@@ -15,6 +15,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 # cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
+
 # teardown method to call close
 @app.teardown_appcontext
 def call_close(code):
@@ -23,6 +24,7 @@ def call_close(code):
     """
     storage.close()
 
+
 # route for handling error
 @app.errorhandler(404)
 def error_handler(error):
@@ -30,6 +32,7 @@ def error_handler(error):
     An error handler function
     """
     return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 # program execution point
 if __name__ == "__main__":
