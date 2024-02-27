@@ -44,10 +44,11 @@ def delete_state(state_id):
 def create_state():
     """ A function that creates a new resource"""
     if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in request.get_json():
-        return make_response(jsonify({'error': 'Missing name'}), 400)
-    state = State(**request.get_json())
+        abort(400, 'Not a JSON')
+    data = request.get_json()
+    if 'name' not in data:
+        abort(400, 'Missing name')
+    state = State(**data)
     state.save()
     return jsonify(state.to_dict()), 201
 
