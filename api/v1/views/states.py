@@ -58,10 +58,10 @@ def create_state():
                  strict_slashes=False)
 def update_state(state_id):
     """A function that updates a state object"""
-    state = storage.get(State, state_id)
+    state = storage.get('State', state_id)
     if state:
         if not request.get_json():
-            return abort(400, 'Not a Json')
+            abort(400, 'Not a Json')
         data = request.get_json()
 
         ignored_keys = ['id', 'created_at', 'updated_at']
