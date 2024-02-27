@@ -76,7 +76,7 @@ def update_state(state_id):
         # Save the updated State object to the storage
         state.save()
         # Return the updated State object in JSON format with 200 status code
-        return jsonify(state), 200
+        return jsonify(state.to_dict()), 200
     else:
         # Return 404 error if the State object is not found
         abort(404)
