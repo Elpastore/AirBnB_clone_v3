@@ -58,21 +58,20 @@ def create_state():
                  strict_slashes=False)
 def update_state(state_id):
     """A function that updates a state object"""
-    state = storage.get('State', state_id)
-    if not state:
-        abort(404)
-    data = request.get_json()
-    if not data:
-        return abort(400, 'Not a Json')
+    state = storage.get(State, state_id)
+    if state:
+        if not request.get_json():
+            return abort(400, 'Not a Json')
+        data = request.get_json()
 
-    update = {key: value for key, value in data.items() if data not in [
-        'id', 'created_at', 'updated_at']}
-    if update:
-        for key, value in update.items():
-            setattr(state, key, value)
-    state.save()
-    return jsonify(state.to_dict()), 200
-
+        ignored_keys = ['id', 'created_at', 'updated_at']
+        for key, value in data.items():
+            if key not in ignored_keys:
+                setattr(state, key, value)
+        state.save()
+        return jsonify(state.to_dict()), 200
+    else:
+        abort(400, 'Not a JSON')
 
 @app_views.errorhandler(400)
 def bad_request(error):
