@@ -24,7 +24,7 @@ def get_all_users():
     list_users = []
     for user in users:
         list_users.append(user.to_dict())
-    return jsonify(list_users.todict())
+    return jsonify(list_users)
 
 
 # Route for retrieving a specific User object by ID
@@ -55,7 +55,6 @@ def delete_user(user_id):
     if user is None:
         # Return 404 error if the User object is not found
         abort(404)
-
     # Delete the User object from the storage and save changes
     user.delete()
     storage.save()
@@ -86,7 +85,7 @@ def create_user():
     # Save the User object to the storage
     user.save()
     # Return the newly created User object in JSON format with 201 status code
-    return jsonify(user.to_dict()), 201
+    return make_response(jsonify(user.to_dict()), 201)
 
 
 # Route for updating an existing User object by ID
@@ -97,7 +96,7 @@ def update_user(user_id):
     Updates a User object
     '''
     # Get the User object with the given ID from the storage
-    user = storage.get(User, user_id)
+    user = storage.get('User', user_id)
     if user is None:
         # Return 404 error if the User object is not found
         abort(404)
@@ -115,4 +114,4 @@ def update_user(user_id):
     # Save the updated User object to the storage
     user.save()
     # Return the updated User object in JSON format with 200 status code
-    return jsonify(user.to_dict()), 200
+    return jsonify(user.to_dict())
