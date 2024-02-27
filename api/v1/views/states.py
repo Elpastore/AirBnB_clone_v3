@@ -71,3 +71,13 @@ def update_state(state_id):
             setattr(state, key, value)
     state.save()
     return jsonify(state.to_dict()), 200
+
+
+@app_views.errorhandler(400)
+def bad_request(error):
+    """
+    Returns a Bad Request message for illegal requests to the API.
+    """
+    # Return a JSON response for 400 error
+    response = {'error': 'Bad Request'}
+    return jsonify(response), 400
