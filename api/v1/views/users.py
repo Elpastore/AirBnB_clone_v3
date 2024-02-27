@@ -19,11 +19,12 @@ def get_all_users():
     '''
     # Get all User objects from the storage and convert them to dictionaries
     users = storage.all(User).values()
-    return jsonify([user.to_dict() for user in users])
+    return jsonify([user.to_dict() for user in users.values()])
 
 
 # Route for retrieving a specific User object by ID
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/users/<string:user_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_user(user_id):
     '''
     Retrieves a User object
@@ -39,7 +40,7 @@ def get_user(user_id):
 
 
 # Route for deleting a specific User object by ID
-@app_views.route('/users/<user_id>', methods=['DELETE'])
+@app_views.route('/users/<string:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     '''
     Deletes a User object
@@ -86,7 +87,8 @@ def create_user():
 
 
 # Route for updating an existing User object by ID
-@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/users/<string:user_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_user(user_id):
     '''
     Updates a User object
@@ -114,24 +116,3 @@ def update_user(user_id):
     else:
         # Return 404 error if the User object is not found
         abort(404)
-
-
-# Error Handlers:
-@app_views.errorhandler(404)
-def not_found(error):
-    '''
-    Returns 404: Not Found
-    '''
-    # Return a JSON response for 404 error
-    response = {'error': 'Not found'}
-    return jsonify(response), 404
-
-
-@app_views.errorhandler(400)
-def bad_request(error):
-    '''
-    Return Bad Request message for illegal requests to the API
-    '''
-    # Return a JSON response for 400 error
-    response = {'error': 'Bad Request'}
-    return jsonify(response), 400
