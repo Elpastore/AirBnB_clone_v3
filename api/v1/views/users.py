@@ -11,10 +11,8 @@ from models import storage
 def get_all_user():
     """return all amenities
     """
-    users = []
-    for user in storage.all(User).values():
-        users.append(user.to_dict())
-    return jsonify(users)
+    users = storage.all(User).values()
+    return jsonify([user.to_dict() for user in user])
 
 
 @app_views.route('/users/<string:user_id>', methods=['GET'],
