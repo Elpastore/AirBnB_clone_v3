@@ -24,7 +24,7 @@ def get_all_users():
     list_users = []
     for user in users:
         list_users.append(user.to_dict())
-    return jsonify(list_users)
+    return jsonify(list_users.todict())
 
 
 # Route for retrieving a specific User object by ID
